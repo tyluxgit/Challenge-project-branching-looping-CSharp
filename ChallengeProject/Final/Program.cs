@@ -21,8 +21,6 @@ int petAge = 0;
 // array used to store runtime data, there is no persisted data
 string[,] ourAnimals = new string[maxPets, 6];
 
-// TODO: For the LP3 guided project we should have the student convert an if-elseif-else statement to a switch statement
-
 // create some initial ourAnimals array entries
 for (int i = 0; i < maxPets; i++)
 {
@@ -87,7 +85,6 @@ for (int i = 0; i < maxPets; i++)
 // display the top-level menu options
 do
 {
-    // NOTE: the Console.Clear method is throwing an exception in debug sessions
     Console.Clear();
 
     Console.WriteLine("Welcome to the Contoso PetFriends app. Your main menu options are:");
