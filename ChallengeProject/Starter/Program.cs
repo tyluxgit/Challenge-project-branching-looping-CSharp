@@ -85,7 +85,6 @@ for (int i = 0; i < maxPets; i++)
 // display the top-level menu options
 do
 {
-    // NOTE: the Console.Clear method is throwing an exception in debug sessions
     Console.Clear();
 
     Console.WriteLine("Welcome to the Contoso PetFriends app. Your main menu options are:");
