@@ -359,7 +359,56 @@ do
 
         case "4":
             // Ensure animal nicknames and personality descriptions are complete
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] != "ID #: ")
+                {
+                    if (ourAnimals[i, 3].Trim().EndsWith(':') || ourAnimals[i, 3].Contains("tbd"))
+                    {
+                        bool validNickname = false;
+                        do
+                        {
+                            Console.WriteLine($"Enter a nickname for {ourAnimals[i, 0]}");
+                            readResult = Console.ReadLine();
+                            if ((readResult != null) && (readResult.Count(char.IsLetter) > 0))
+                            {
+                                ourAnimals[i, 3] = "Nickname: " + readResult;
+                            }
+                            else { continue; }
+                            Console.WriteLine();
+                            DisplayAnimal(ourAnimals, i);
+                            Console.WriteLine($"\nNew values for {ourAnimals[i, 0]}, do you agree with modifications ? y/n");
+                            var validResult = Console.ReadLine();
+                            if (validResult == "y") { validNickname = true; }
+                        }
+                        while (validNickname == false);
+                    }
+                    if (ourAnimals[i, 5].Trim().EndsWith(':') || ourAnimals[i, 5].Contains("tbd"))
+                    {
+                        bool validPersonality = false;
+                        do
+                        {
+                            Console.WriteLine($"Enter a personality description for {ourAnimals[i, 0]} (likes or dislikes, tricks, energy level)");
+                            readResult = Console.ReadLine();
+                            if ((readResult != null) && (readResult.Count(char.IsLetter) > 0))
+                            {
+                                ourAnimals[i, 5] = "Personality: " + readResult;
+                            }
+                            else { continue; }
+                            Console.WriteLine();
+                            DisplayAnimal(ourAnimals, i);
+                            Console.WriteLine($"\nNew values for {ourAnimals[i, 0]}, do you agree with modifications ? y/n");
+                            var validResult = Console.ReadLine();
+                            if (validResult == "y") { validPersonality = true; }
+                        }
+                        while (validPersonality == false);
+                    }
+
+                }
+
+            }
+            Console.Clear();
+            Console.WriteLine("Nickname and personality description fields are complete for all of our friends.");
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
