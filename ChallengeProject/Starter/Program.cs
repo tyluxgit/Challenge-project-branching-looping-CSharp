@@ -303,24 +303,6 @@ do
             {
                 if (ourAnimals[i, 0] != "ID #: ")
                 {
-                    if (ourAnimals[i, 4].Trim().EndsWith(':') || ourAnimals[i, 4].Contains("tbd"))
-                    {
-                        bool validPhysicalDescription = false;
-                        do
-                        {
-                            Console.WriteLine($"Please enter a physical description for {ourAnimals[i, 0]}");
-                            readResult = Console.ReadLine();
-                            if ((readResult != null) && (readResult.Count(char.IsLetter) > 0))
-                            {
-                                ourAnimals[i, 4] = "Physical description: " + readResult;
-                            }
-                            DisplayAnimal(ourAnimals, i);
-                            Console.WriteLine($"New values for {ourAnimals[i, 0]}, do you agree with modifications ? y/n");
-                            var validResult = Console.ReadLine();
-                            if (validResult == "y") { validPhysicalDescription = true; }
-                        }
-                        while (validPhysicalDescription == false);
-                    }
                     var currentAnimalAge = ourAnimals[i, 2].Substring(ourAnimals[i, 2].Trim().IndexOf(':') + 1);
                     validEntry = int.TryParse(currentAnimalAge, out petAge);
                     if (!validEntry)
@@ -328,7 +310,7 @@ do
                         bool validAge = false;
                         do
                         {
-                            Console.WriteLine($"Please enter a valid age for {ourAnimals[i, 0]}");
+                            Console.WriteLine($"Enter an age for {ourAnimals[i, 0]}");
                             readResult = Console.ReadLine();
                             if (int.TryParse(readResult, out petAge))
                             {
@@ -340,13 +322,37 @@ do
                             Console.WriteLine($"\nNew values for {ourAnimals[i, 0]}, do you agree with modifications ? y/n");
                             var validResult = Console.ReadLine();
                             if (validResult == "y") { validAge = true; }
-                        } 
+                        }
                         while (validAge == false);
 
                     }
-                }
-            }
 
+                    if (ourAnimals[i, 4].Trim().EndsWith(':') || ourAnimals[i, 4].Contains("tbd"))
+                    {
+                        bool validPhysicalDescription = false;
+                        do
+                        {
+                            Console.WriteLine($"Enter a physical description for {ourAnimals[i, 0]} (size, color, breed, gender, weight, housebroken)");
+                            readResult = Console.ReadLine();
+                            if ((readResult != null) && (readResult.Count(char.IsLetter) > 0))
+                            {
+                                ourAnimals[i, 4] = "Physical description: " + readResult;
+                            }
+                            else { continue; }
+                            Console.WriteLine();
+                            DisplayAnimal(ourAnimals, i);
+                            Console.WriteLine($"\nNew values for {ourAnimals[i, 0]}, do you agree with modifications ? y/n");
+                            var validResult = Console.ReadLine();
+                            if (validResult == "y") { validPhysicalDescription = true; }
+                        }
+                        while (validPhysicalDescription == false);
+                    }
+                    
+                }
+                
+            }
+            Console.Clear();
+            Console.WriteLine("Age and physical description fields are complete for all of our friends.");
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
