@@ -1,6 +1,18 @@
 using System;
 using System.IO;
 
+void DisplayAnimal(string[,] animals, int rowIndex)
+{
+    int columns = animals.GetLength(1); // Nombre de colonnes (informations par animal)
+
+    for (int j = 0; j < columns; j++)
+    {
+        Console.WriteLine(animals[rowIndex, j]);
+    }
+    Console.WriteLine(); // Saut de ligne pour la lisibilité
+}
+
+
 // the ourAnimals array will store the following: 
 string animalSpecies = "";
 string animalID = "";
@@ -287,7 +299,54 @@ do
 
         case "3":
             // Ensure animal ages and physical descriptions are complete
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
+            for (int i = 0; i < maxPets; i++)
+            {
+                if (ourAnimals[i, 0] != "ID #: ")
+                {
+                    if (ourAnimals[i, 4].Trim().EndsWith(':') || ourAnimals[i, 4].Contains("tbd"))
+                    {
+                        bool validPhysicalDescription = false;
+                        do
+                        {
+                            Console.WriteLine($"Please enter a physical description for {ourAnimals[i, 0]}");
+                            readResult = Console.ReadLine();
+                            if ((readResult != null) && (readResult.Count(char.IsLetter) > 0))
+                            {
+                                ourAnimals[i, 4] = "Physical description: " + readResult;
+                            }
+                            DisplayAnimal(ourAnimals, i);
+                            Console.WriteLine($"New values for {ourAnimals[i, 0]}, do you agree with modifications ? y/n");
+                            var validResult = Console.ReadLine();
+                            if (validResult == "y") { validPhysicalDescription = true; }
+                        }
+                        while (validPhysicalDescription == false);
+                    }
+                    var currentAnimalAge = ourAnimals[i, 2].Substring(ourAnimals[i, 2].Trim().IndexOf(':') + 1);
+                    validEntry = int.TryParse(currentAnimalAge, out petAge);
+                    if (!validEntry)
+                    {
+                        bool validAge = false;
+                        do
+                        {
+                            Console.WriteLine($"Please enter a valid age for {ourAnimals[i, 0]}");
+                            readResult = Console.ReadLine();
+                            if (int.TryParse(readResult, out petAge))
+                            {
+                                ourAnimals[i, 2] = "Age: " + petAge;
+                            }
+                            else { continue; }
+                            Console.WriteLine();
+                            DisplayAnimal(ourAnimals, i);
+                            Console.WriteLine($"\nNew values for {ourAnimals[i, 0]}, do you agree with modifications ? y/n");
+                            var validResult = Console.ReadLine();
+                            if (validResult == "y") { validAge = true; }
+                        } 
+                        while (validAge == false);
+
+                    }
+                }
+            }
+
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
@@ -312,7 +371,7 @@ do
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
-        
+
         case "7":
             // Display all cats with a specified characteristic
             Console.WriteLine("UNDER CONSTRUCTION - please check back next month to see progress.");
